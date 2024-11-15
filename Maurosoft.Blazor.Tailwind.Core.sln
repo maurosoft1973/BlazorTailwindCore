@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maurosoft.Blazor.Tailwind.Core", "src\Maurosoft.Blazor.Tailwind.Core\Maurosoft.Blazor.Tailwind.Core.csproj", "{9EE24871-5AB1-4A9D-87FB-C6F148F823BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementi di soluzione", "Elementi di soluzione", "{3713DA2F-0C5F-4898-B3DF-8C1721C1C519}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		coverage.runsettings = coverage.runsettings
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+		LICENSE.md = LICENSE.md
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9EE24871-5AB1-4A9D-87FB-C6F148F823BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EE24871-5AB1-4A9D-87FB-C6F148F823BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EE24871-5AB1-4A9D-87FB-C6F148F823BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EE24871-5AB1-4A9D-87FB-C6F148F823BA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {60B73AB3-3F05-4F41-88B2-C6D5A6994CDF}
+	EndGlobalSection
+EndGlobal

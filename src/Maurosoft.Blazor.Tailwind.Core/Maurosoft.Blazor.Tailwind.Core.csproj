@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>Maurosoft.Blazor.Tailwind.Core</AssemblyName>
+    <PackageId>Maurosoft.Blazor.Tailwind.Core</PackageId>
+    <Product>Maurosoft.Blazor.Tailwind.Core</Product>
+    <Title>Blazor Tailwind Core</Title>
+    <Description>Core Library and Css for Blazor Components with Tailwind</Description>
+    <Authors>Mauro Cardillo</Authors>
+    <Company>Mauro Cardillo</Company>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>Blazor;Tailwind</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/maurosoft1973/BlazorTailwindCore</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/maurosoft1973/BlazorTailwindCore.git</RepositoryUrl>
+    <RepositoryBranch>main</RepositoryBranch>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ardalis.SmartEnum" />
+    <PackageReference Include="BlazorComponentUtilities" />
+    <PackageReference Include="Macross.Json.Extensions" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+</Project>
