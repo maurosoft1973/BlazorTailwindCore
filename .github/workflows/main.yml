@@ -19,11 +19,11 @@ on:
 
 env:
   TIMEZONE: 'Europe/Rome'
-  NET_VERSION: 'net8.0'
   CONFIGURATION: 'Release'
   PROJECT_PATH: ./src/Maurosoft.Blazor.Tailwind.Core
-  PROJECT_NAME: Maurosoft.Blazor.Tailwind.Core.csproj
+  PROJECT_NAME:  Maurosoft.Blazor.Tailwind.Core.csproj
   PACKAGE_NAME: Maurosoft.Blazor.Tailwind.Core
+  BUILD_ARTIFACT: Maurosoft.Blazor.Tailwind.Core
 
 jobs:
   build:
@@ -33,7 +33,7 @@ jobs:
       version: ${{ steps.nbgv.outputs.SemVer2 }}
     steps:
       - name: Checkout
-        uses: codebeltnet/git-checkout@v1
+        uses: maurosoft1973/git-checkout@v1
 
       - name: Set Node.js version
         uses: actions/setup-node@v2
@@ -61,13 +61,10 @@ jobs:
       - name: Build for ${{ env.CONFIGURATION }}
         uses: maurosoft1973/gha-dotnet-build@v1
         with:
-          # Optional path to the project(s) file to restore. Pass empty to have MSBuild use the default behavior.
-          # Supports globbing.
           projects: ${{ env.PROJECT_PATH }}/${{ env.PROJECT_NAME }}
-          # Defines the build configuration.
           configuration: ${{ env.CONFIGURATION }}
-          # Compiles for a specific framework. The framework must be defined in the project file.
           framework: ${{ env.NET_VERSION }}
+          uploadBuildArtifactName:  ${{ env.BUILD_ARTIFACT }}
 
   pack:
     name: 📦 Pack
@@ -77,11 +74,12 @@ jobs:
       - name: Pack for ${{ env.CONFIGURATION }}
         uses: maurosoft1973/gha-dotnet-pack@v1
         with:
-          configuration: ${{ env.CONFIGURATION }}
-          packageName: ${{ env.PACKAGE_NAME }}
+          downloadArtifactName: ${{ env.BUILD_ARTIFACT }}
           level: 'normal'
+          packageName: ${{ env.PACKAGE_NAME }}
+          packageVersion: ${{ needs.build.outputs.version }}
+          projects: ${{ env.PROJECT_PATH }}/${{ env.PROJECT_NAME }}
           uploadPackedArtifact: true
-          version: ${{ needs.build.outputs.version }}
 
   deploy:
     name: 🚀 Deploy Pack v.${{ needs.build.outputs.version }}
@@ -92,6 +90,6 @@ jobs:
       - uses: maurosoft1973/gha-dotnet-nuget-push@v1
         with:
           source: 'https://api.nuget.org/v3/index.json'
-          packageName: ${{ env.PACKAGE_NAME }}.${{ env.CONFIGURATION }}.${{ needs.build.outputs.version }}.nupkg
           token: ${{ secrets.NUGET_API_KEY }}
+          packageName: ${{ env.PACKAGE_NAME }}.${{ needs.build.outputs.version }}.nupkg
           configuration: ${{ inputs.configuration == '' && 'Release' || inputs.configuration }}
