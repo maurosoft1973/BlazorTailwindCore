@@ -1,4 +1,15 @@
 ﻿using Maurosoft.Blazor.Tailwind.Core.Css;
+using Maurosoft.Blazor.Tailwind.Core.Css.Properties.Backgrounds;
+using Maurosoft.Blazor.Tailwind.Core.Css.Properties.Borders;
+using Maurosoft.Blazor.Tailwind.Core.Css.Properties.Custom;
+using Maurosoft.Blazor.Tailwind.Core.Css.Properties.Effects;
+using Maurosoft.Blazor.Tailwind.Core.Css.Properties.FlexboxGrid;
+using Maurosoft.Blazor.Tailwind.Core.Css.Properties.Interactivity;
+using Maurosoft.Blazor.Tailwind.Core.Css.Properties.Layout;
+using Maurosoft.Blazor.Tailwind.Core.Css.Properties.Sizing;
+using Maurosoft.Blazor.Tailwind.Core.Css.Properties.Spacing;
+using Maurosoft.Blazor.Tailwind.Core.Css.Properties.Tables;
+using Maurosoft.Blazor.Tailwind.Core.Css.Properties.Typography;
 using Maurosoft.Blazor.Tailwind.Core.Enums;
 using System;
 using System.Collections.Generic;
@@ -102,8 +113,8 @@ public static class CssPropertyExtension
         {
             switch (cssPropertyBase.Type)
             {
-                case Type t when t == typeof(AlignItem):
-                    cssProperties.Add(new BaseComponentCssProperty<AlignItem>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                case Type t when t == typeof(AlignItems):
+                    cssProperties.Add(new BaseComponentCssProperty<AlignItems>(cssPropertyBase.Scope, cssPropertyBase.Value));
                     break;
 
                 case Type t when t == typeof(BackgroundColor):
@@ -144,10 +155,6 @@ public static class CssPropertyExtension
 
                 case Type t when t == typeof(BoxShadow):
                     cssProperties.Add(new BaseComponentCssProperty<BoxShadow>(cssPropertyBase.Scope, cssPropertyBase.Value));
-                    break;
-
-                case Type t when t == typeof(Color):
-                    cssProperties.Add(new BaseComponentCssProperty<Color>(cssPropertyBase.Scope, cssPropertyBase.Value));
                     break;
 
                 case Type t when t == typeof(ColorOpacity):
