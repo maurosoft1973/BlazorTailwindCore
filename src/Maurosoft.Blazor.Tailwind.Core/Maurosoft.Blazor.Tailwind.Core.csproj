@@ -22,6 +22,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="package-lock.json" />
+    <Content Remove="package.json" />
+    <Content Remove="version.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\..\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
@@ -38,5 +44,4 @@
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
-
 </Project>
