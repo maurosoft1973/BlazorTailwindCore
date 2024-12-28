@@ -1,4 +1,5 @@
 ﻿using Maurosoft.Blazor.Tailwind.Core.Css;
+using Maurosoft.Blazor.Tailwind.Core.Enums;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -10,13 +11,17 @@ namespace Maurosoft.Blazor.Tailwind.Core.Interfaces;
 
 public interface IBlazorComponentBase
 {
-    void AddCssProperty(ITailwindCssPropertyBase cssProperty);
+    void AddOrUpdateCssProperty(ITailwindCssProperty cssProperty, bool stateHasChanged = true);
 
-    void RegenerateCssContainerClasses(bool stateHasChanged = false);
+    void AddOrUpdateCssProperties(IList<ITailwindCssProperty> cssProperties, bool stateHasChanged = true);
+
+    string RenderCssProperty(TailwindCssPropertyScopeBase tailwindCssPropertyScopeBase = TailwindCssPropertyScopeBase.None);
 
     bool Disabled { get; set; }
 
     ElementReference Element { get; set; }
+
+    bool LoadFlowbiteLibrary { get; set; }
 
     bool HasJavascript { get; set; }
 

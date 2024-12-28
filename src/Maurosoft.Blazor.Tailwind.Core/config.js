@@ -1,5 +1,6 @@
 ﻿const config = {
     tailwindjs: './tailwind.config.js',
+    tailwindjscolor: './tailwind.config.color.js',
 };
 
 const paths = {

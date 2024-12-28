@@ -10,4 +10,3 @@ namespace Maurosoft.Blazor.Tailwind.Core.Css;
 public abstract class TailwindCssClassBase(string name, int value) : SmartEnum<TailwindCssClassBase>(name, value)
 {
 }
-

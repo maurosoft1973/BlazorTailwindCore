@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementi di soluzione", "El
 		version.json = version.json
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maurosoft.Blazor.Tailwind.Core.DemoTailwind", "src\Demo\Maurosoft.Blazor.Tailwind.Core.DemoTailwind.csproj", "{00B03B9B-AEA1-437A-BB90-F095F37EB4BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{9EE24871-5AB1-4A9D-87FB-C6F148F823BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9EE24871-5AB1-4A9D-87FB-C6F148F823BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9EE24871-5AB1-4A9D-87FB-C6F148F823BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00B03B9B-AEA1-437A-BB90-F095F37EB4BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00B03B9B-AEA1-437A-BB90-F095F37EB4BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00B03B9B-AEA1-437A-BB90-F095F37EB4BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00B03B9B-AEA1-437A-BB90-F095F37EB4BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

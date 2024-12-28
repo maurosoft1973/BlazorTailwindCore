@@ -1,5 +1,7 @@
-﻿using Maurosoft.Blazor.Tailwind.Core.Css;
+﻿using BlazorComponentUtilities;
+using Maurosoft.Blazor.Tailwind.Core.Css;
 using Maurosoft.Blazor.Tailwind.Core.Enums;
+using Maurosoft.Blazor.Tailwind.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,22 @@ namespace Maurosoft.Blazor.Tailwind.Core.ExtensionMethods;
 
 public static class EnumExtension
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="cssProperties"></param>
+    /// <returns></returns>
+    public static string RenderCssProperty<T>(this IEnumerable<T> cssProperties) where T : ITailwindCssProperty
+    {
+        var cssPropertiesBuilder = new CssBuilder();
+
+        foreach (var cssProperty in cssProperties)
+            cssPropertiesBuilder.AddClass(cssProperty.Value.ToValue());
+
+        return cssPropertiesBuilder.Build();
+    }
+
     /// <summary>
     /// 
     /// </summary>

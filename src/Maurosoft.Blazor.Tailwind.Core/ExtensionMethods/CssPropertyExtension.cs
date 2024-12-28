@@ -11,6 +11,7 @@ using Maurosoft.Blazor.Tailwind.Core.Css.Properties.Spacing;
 using Maurosoft.Blazor.Tailwind.Core.Css.Properties.Tables;
 using Maurosoft.Blazor.Tailwind.Core.Css.Properties.Typography;
 using Maurosoft.Blazor.Tailwind.Core.Enums;
+using Maurosoft.Blazor.Tailwind.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,12 +32,12 @@ public static class CssPropertyExtension
     /// <param name="cssProperties"></param>
     /// <param name="scope"></param>
     /// <param name="value"></param>
-    public static void AddIfNotExist<P>(this IList<ITailwindCssPropertyBase> cssProperties, TailwindCssPropertyScopeBase scope, TailwindCssClassBase value) where P : TailwindCssClassBase
+    public static void AddIfNotExist<P>(this IList<ITailwindCssProperty> cssProperties, TailwindCssPropertyScopeBase scope, TailwindCssClassBase value) where P : TailwindCssClassBase
     {
         var found = cssProperties.SingleOrDefault(c => c.Scope == scope && c.Name == typeof(P).Name);
 
         if (found == null)
-            cssProperties.Add(new BaseComponentCssProperty<P>(scope, value));
+            cssProperties.Add(new TailwindCssProperty<P>(value, scope));
     }
 
     /// <summary>
@@ -46,7 +47,7 @@ public static class CssPropertyExtension
     /// <param name="cssProperties"></param>
     /// <param name="scope"></param>
     /// <returns></returns>
-    public static P? ReadValue<P>(this IEnumerable<ITailwindCssPropertyBase> cssProperties, TailwindCssPropertyScopeBase scope = TailwindCssPropertyScopeBase.All) where P : TailwindCssClassBase
+    public static P? ReadValue<P>(this IEnumerable<ITailwindCssProperty> cssProperties, TailwindCssPropertyScopeBase scope = TailwindCssPropertyScopeBase.All) where P : TailwindCssClassBase
     {
         var found = cssProperties.SingleOrDefault(c => (c.Scope == scope || scope == TailwindCssPropertyScopeBase.All) && c.Name == typeof(P).Name);
 
@@ -62,7 +63,7 @@ public static class CssPropertyExtension
     /// <typeparam name="T"></typeparam>
     /// <param name="cssProperties"></param>
     /// <returns>True if <typeparamref name="P"/> exist, false otherwise</returns>
-    public static bool UpdateValue<P>(this IEnumerable<ITailwindCssPropertyBase> cssProperties, TailwindCssClassBase value) where P : TailwindCssClassBase
+    public static bool UpdateValue<P>(this IEnumerable<ITailwindCssProperty> cssProperties, TailwindCssClassBase value) where P : TailwindCssClassBase
     {
         var found = cssProperties.SingleOrDefault(c => c.Name == typeof(P).Name);
 
@@ -82,16 +83,14 @@ public static class CssPropertyExtension
     /// <param name="cssProperties"></param>
     /// <param name="scope"></param>
     /// <param name="value"></param>
-    public static void UpdateOrAddValueIfNotExist<P>(this IList<ITailwindCssPropertyBase> cssProperties, TailwindCssPropertyScopeBase scope, TailwindCssClassBase value) where P : TailwindCssClassBase
+    public static void UpdateOrAddValueIfNotExist<P>(this IList<ITailwindCssProperty> cssProperties, TailwindCssPropertyScopeBase scope, TailwindCssClassBase value) where P : TailwindCssClassBase
     {
         var found = cssProperties.SingleOrDefault(c => c.Name == typeof(P).Name);
 
         if (found != null)
-        {
             found.Value = value;
-        }
         else
-            cssProperties.Add(new BaseComponentCssProperty<P>(scope, value));
+            cssProperties.Add(new TailwindCssProperty<P>(value, scope));
     }
 
     /// <summary>
@@ -101,7 +100,7 @@ public static class CssPropertyExtension
     /// <param name="cssProperties"></param>
     /// <param name="scope"></param>
     /// <param name="value"></param>
-    public static void UpdateOrAddValueIfNotExist(this IList<ITailwindCssPropertyBase> cssProperties, ITailwindCssPropertyBase cssPropertyBase)
+    public static void UpdateOrAddValueIfNotExist(this IList<ITailwindCssProperty> cssProperties, ITailwindCssProperty cssPropertyBase)
     {
         var found = cssProperties.SingleOrDefault(c => c.Name == cssPropertyBase.Name && c.Scope == cssPropertyBase.Scope);
 
@@ -114,135 +113,195 @@ public static class CssPropertyExtension
             switch (cssPropertyBase.Type)
             {
                 case Type t when t == typeof(AlignItems):
-                    cssProperties.Add(new BaseComponentCssProperty<AlignItems>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<AlignItems>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(BackgroundColor):
-                    cssProperties.Add(new BaseComponentCssProperty<BackgroundColor>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<BackgroundColor>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(BorderCollapsed):
-                    cssProperties.Add(new BaseComponentCssProperty<BorderCollapsed>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<BorderCollapsed>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(BorderColor):
-                    cssProperties.Add(new BaseComponentCssProperty<BorderColor>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<BorderColor>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(BorderRadius):
-                    cssProperties.Add(new BaseComponentCssProperty<BorderRadius>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<BorderRadius>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(BorderWidth):
-                    cssProperties.Add(new BaseComponentCssProperty<BorderWidth>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<BorderWidth>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(BorderWidthBottom):
-                    cssProperties.Add(new BaseComponentCssProperty<BorderWidthBottom>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<BorderWidthBottom>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(BorderWidthLeft):
-                    cssProperties.Add(new BaseComponentCssProperty<BorderWidthLeft>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<BorderWidthLeft>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(BorderWidthRight):
-                    cssProperties.Add(new BaseComponentCssProperty<BorderWidthRight>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<BorderWidthRight>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(BorderWidthTop):
-                    cssProperties.Add(new BaseComponentCssProperty<BorderWidthTop>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<BorderWidthTop>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(BoxShadow):
-                    cssProperties.Add(new BaseComponentCssProperty<BoxShadow>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<BoxShadow>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(ColorOpacity):
-                    cssProperties.Add(new BaseComponentCssProperty<ColorOpacity>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<ColorOpacity>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(Cursor):
-                    cssProperties.Add(new BaseComponentCssProperty<Cursor>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<Cursor>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(Display):
-                    cssProperties.Add(new BaseComponentCssProperty<Display>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<Display>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(Flex):
-                    cssProperties.Add(new BaseComponentCssProperty<Flex>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<Flex>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(FontSize):
-                    cssProperties.Add(new BaseComponentCssProperty<FontSize>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<FontSize>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(FontWeight):
-                    cssProperties.Add(new BaseComponentCssProperty<FontWeight>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<FontWeight>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(Gap):
-                    cssProperties.Add(new BaseComponentCssProperty<Gap>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<Gap>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(JustifySelf):
+                    cssProperties.Add(new TailwindCssProperty<JustifySelf>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(JustifyItems):
+                    cssProperties.Add(new TailwindCssProperty<JustifyItems>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(JustifyContent):
+                    cssProperties.Add(new TailwindCssProperty<JustifyContent>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(GridColumn):
-                    cssProperties.Add(new BaseComponentCssProperty<GridColumn>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<GridColumn>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(GridColumnEnd):
-                    cssProperties.Add(new BaseComponentCssProperty<GridColumnEnd>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<GridColumnEnd>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(GridColumnStart):
-                    cssProperties.Add(new BaseComponentCssProperty<GridColumnStart>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<GridColumnStart>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(Height):
-                    cssProperties.Add(new BaseComponentCssProperty<Height>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<Height>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(MarginLeft):
-                    cssProperties.Add(new BaseComponentCssProperty<MarginLeft>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<MarginLeft>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(MarginTop):
-                    cssProperties.Add(new BaseComponentCssProperty<MarginTop>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<MarginTop>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(MaxHeight):
+                    cssProperties.Add(new TailwindCssProperty<MaxHeight>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(MaxWidth):
+                    cssProperties.Add(new TailwindCssProperty<MaxWidth>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(MinHeight):
+                    cssProperties.Add(new TailwindCssProperty<MinHeight>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(MinWidth):
+                    cssProperties.Add(new TailwindCssProperty<MinWidth>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(Padding):
-                    cssProperties.Add(new BaseComponentCssProperty<Padding>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<Padding>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(PaddingBottom):
+                    cssProperties.Add(new TailwindCssProperty<PaddingBottom>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(PaddingEnd):
+                    cssProperties.Add(new TailwindCssProperty<PaddingEnd>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(PaddingLeft):
+                    cssProperties.Add(new TailwindCssProperty<PaddingLeft>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(PaddingRight):
+                    cssProperties.Add(new TailwindCssProperty<PaddingRight>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(PaddingStart):
+                    cssProperties.Add(new TailwindCssProperty<PaddingStart>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(PaddingTop):
+                    cssProperties.Add(new TailwindCssProperty<PaddingTop>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(PaddingX):
+                    cssProperties.Add(new TailwindCssProperty<PaddingX>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(PaddingY):
+                    cssProperties.Add(new TailwindCssProperty<PaddingY>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(Position):
-                    cssProperties.Add(new BaseComponentCssProperty<Position>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<Position>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(Size):
-                    cssProperties.Add(new BaseComponentCssProperty<Size>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<Size>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(TextAlign):
-                    cssProperties.Add(new BaseComponentCssProperty<TextAlign>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<TextAlign>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(TextColor):
-                    cssProperties.Add(new BaseComponentCssProperty<TextColor>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<TextColor>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(VerticalAlign):
-                    cssProperties.Add(new BaseComponentCssProperty<VerticalAlign>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<VerticalAlign>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(Visibility):
-                    cssProperties.Add(new BaseComponentCssProperty<Visibility>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<Visibility>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(Width):
-                    cssProperties.Add(new BaseComponentCssProperty<Width>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<Width>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(ZIndex):
-                    cssProperties.Add(new BaseComponentCssProperty<ZIndex>(cssPropertyBase.Scope, cssPropertyBase.Value));
+                    cssProperties.Add(new TailwindCssProperty<ZIndex>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
             }
         }

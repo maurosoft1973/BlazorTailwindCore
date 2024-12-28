@@ -20,8 +20,9 @@ function TaskCleanJs() {
 }
 
 function TaskCss() {
-    console.log(logSymbols.info, "Generate Css");
+    console.log(logSymbols.info, "Generate Full Css - Minified");
     const tailwindcss = require("tailwindcss");
+    const cleanCSS = require('gulp-clean-css');
     return src(`${options.paths.assets.css}/style.scss`)
         .pipe(sass().on("error", sass.logError))
         .pipe(
@@ -29,6 +30,28 @@ function TaskCss() {
                 tailwindcss(options.config.tailwindjs)
             ])
         )
+        .pipe(cleanCSS({ debug: true }, (details) => {
+            console.log(`${details.name}: ${details.stats.originalSize}`);
+            console.log(`${details.name}: ${details.stats.minifiedSize}`);
+        }))
+        .pipe(dest(options.paths.wwwroot.css));
+}
+
+function TaskCssColor() {
+    console.log(logSymbols.info, "Generate Css Background and Text Color - Minified");
+    const tailwindcss = require("tailwindcss");
+    const cleanCSS = require('gulp-clean-css');
+    return src(`${options.paths.assets.css}/color.scss`)
+        .pipe(sass().on("error", sass.logError))
+        .pipe(
+            postcss([
+                tailwindcss(options.config.tailwindjscolor)
+            ])
+        )
+        .pipe(cleanCSS({ debug: true }, (details) => {
+            console.log(`${details.name}: ${details.stats.originalSize}`);
+            console.log(`${details.name}: ${details.stats.minifiedSize}`);
+        }))
         .pipe(dest(options.paths.wwwroot.css));
 }
 
@@ -39,7 +62,8 @@ function TaskJs() {
     );
 }
 
-exports.build = series(TaskCleanCss, TaskCleanJs, TaskCss, TaskJs);
+exports.build = series(TaskCleanCss, TaskCleanJs, TaskCss, TaskCssColor, TaskJs);
 exports.clean = series(TaskCleanCss, TaskCleanJs);
 exports.css = series(TaskCss);
+exports.csscolor = series(TaskCssColor);
 exports.js = series(TaskJs);

@@ -6,6 +6,8 @@ using Microsoft.JSInterop;
 using Maurosoft.Blazor.Tailwind.Core.Interfaces;
 using Maurosoft.Blazor.Tailwind.Core.Css;
 using Maurosoft.Blazor.Tailwind.Core.ExtensionMethods;
+using Microsoft.AspNetCore.Components.Rendering;
+using Maurosoft.Blazor.Tailwind.Core.Enums;
 
 namespace Maurosoft.Blazor.Tailwind.Core;
 
@@ -13,11 +15,10 @@ public abstract class BlazorComponentBase : ComponentBase, IDisposable, IAsyncDi
 {
     #region Fields and Constants
     protected bool isCompletedRender = false;
-    protected bool requiredRender = false;
 
-    protected const string jsPath = "./_content/Maurosoft.Blazor.Tailwind.Core/js";
+    protected const string JsPath = "./_content/Maurosoft.Blazor.Tailwind.Core/js";
 
-    protected IJSObjectReference _jsModule = default!;
+    protected IJSObjectReference _jsFlowbiteModule = default!;
 
     /// <summary>
     /// If true, <see cref="Id" /> will be auto-generated on component initialize.
@@ -37,6 +38,8 @@ public abstract class BlazorComponentBase : ComponentBase, IDisposable, IAsyncDi
 
     #region Javascript
 
+    public virtual bool LoadFlowbiteLibrary { get; set; } = true;
+
     public virtual bool HasJavascript { get; set; } = false;
 
     public virtual string JavascriptFile { get; set; } = "";
@@ -49,9 +52,6 @@ public abstract class BlazorComponentBase : ComponentBase, IDisposable, IAsyncDi
 
     [Parameter]
     public RenderFragment ChildContent { get; set; } = default!;
-
-    [Parameter]
-    public bool PrerenderingMode { get; set; } = false;
 
     /// <summary>
     /// Gets or sets the unique id of the element.
@@ -85,6 +85,12 @@ public abstract class BlazorComponentBase : ComponentBase, IDisposable, IAsyncDi
     /// </summary>
     [Parameter]
     public virtual string Tooltip { get; set; } = "";
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Parameter]
+    public List<ITailwindCssProperty> CssProperties { get; set; } = [];
     #endregion
 
     #region Services
@@ -98,32 +104,36 @@ public abstract class BlazorComponentBase : ComponentBase, IDisposable, IAsyncDi
     #region Public Method, Properties
     public ElementReference Element { get; set; }
 
-    public List<ITailwindCssPropertyBase> CssProperties { get; set; } = [];
+    protected List<ITailwindCssProperty> _cssProperties { get; set; } = [];
 
-    public void AddCssProperty(ITailwindCssPropertyBase cssProperty)
+    public void AddOrUpdateCssProperty(ITailwindCssProperty cssProperty, bool stateHasChanged = true) =>
+        AddOrUpdateCssProperties([cssProperty], stateHasChanged);
+
+    public void AddOrUpdateCssProperties(IList<ITailwindCssProperty> cssProperties, bool stateHasChanged = true)
     {
-        requiredRender = true;
-        CssProperties.UpdateOrAddValueIfNotExist(cssProperty);
+        foreach (var cssProperty in cssProperties)
+            _cssProperties.UpdateOrAddValueIfNotExist(cssProperty);
+
+        if (stateHasChanged)
+            InvokeAsync(() => StateHasChanged());
     }
 
-    public void RegenerateCssContainerClasses(bool stateHasChanged = false)
-    {
-        //ContainerCssClasses = _cssContainerProperties.BuildCssClasses(_cssPropertiesCustomBuilder);
-
-        //if (stateHasChanged)
-        //	StateHasChanged();
-    }
-
+    public string RenderCssProperty(TailwindCssPropertyScopeBase tailwindCssPropertyScopeBase = TailwindCssPropertyScopeBase.All) =>
+        _cssProperties.Where(w => w.Scope == tailwindCssPropertyScopeBase).RenderCssProperty();
     #endregion
 
     #region Override ComponentBase
-    /// <inheritdoc />
+
     protected override void OnInitialized()
     {
         isCompletedRender = false;
 
         if (ShouldAutoGenerateId && Id == null)
             Id = GeneratorId.GetNextId(IdSuffix);
+
+        if (CssProperties.Count > 0)
+            foreach (var param in CssProperties)
+                _cssProperties.Add(param);
 
         OnInitializeCssProperties();
     }
@@ -133,20 +143,19 @@ public abstract class BlazorComponentBase : ComponentBase, IDisposable, IAsyncDi
         OnGenerateCssClasses();
     }
 
-    /// <inheritdoc />
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
             isCompletedRender = true;
-            _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", $"{jsPath}/flowbite.min.js");
 
-            if (PrerenderingMode && requiredRender)
-                await InvokeAsync(StateHasChanged);
+            if (LoadFlowbiteLibrary)
+                _jsFlowbiteModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", $"{JsPath}/flowbite.min.js");
         }
 
         await base.OnAfterRenderAsync(firstRender);
     }
+
     #endregion
 
     #region Dispose
@@ -188,7 +197,7 @@ public abstract class BlazorComponentBase : ComponentBase, IDisposable, IAsyncDi
     /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
     /// </summary>
     /// <param name="disposing"></param>
-    protected virtual ValueTask DisposeAsync(bool disposing)
+    protected virtual async ValueTask DisposeAsync(bool disposing)
     {
         try
         {
@@ -197,14 +206,13 @@ public abstract class BlazorComponentBase : ComponentBase, IDisposable, IAsyncDi
                 AsyncDisposed = true;
             }
 
-            return default;
+            if (LoadFlowbiteLibrary && _jsFlowbiteModule != null)
+                await _jsFlowbiteModule.DisposeAsync();
         }
         catch
         {
             // do nothing
         }
-
-        return default;
     }
     #endregion
 

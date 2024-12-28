@@ -1,7 +1,103 @@
 ﻿# Blazor Tailwind Component Core
 
+[![NuGet Downloads](https://img.shields.io/nuget/dt/Maurosoft.Blazor.Tailwind.Core)](https://www.nuget.org/packages/Maurosoft.Blazor.Tailwind.Core/)
+
 ### Description
-**Blazor Tailwind Component Core** is a library for creating custom Blazor components built on the **Tailwind CSS** framework. This library simplifies the integration of visual components into Blazor applications by providing a base class for component creation and CSS class mapping with the Tailwind framework.
+**Blazor Tailwind Component Core** is a library for creating custom Blazor components built on the **Tailwind CSS** framework. This library simplifies the integration of visual components into Blazor applications by providing a base class for component creation and css class mapping with the Tailwind framework.
+
+The library provides the abstract class ***BlazorComponentBase*** for its own customised component and the class ***TailwindCssProperty*** for css properties.
+
+For each css property, it is possible to define a scope per element, so that each html tag receives its own specific css classes (an example will better clarify the usage)
+
+This allows you to optimise the use of css classes through the use of code and greater customisation by the user of your component
+
+It is possible to change the value of the css properties when an event (click) occurs, with the component layout automatically updating to reflect the new configuration.
+
+The library provides the following css files:
+- ***style.css***: contains all mapped css classes
+- ***colour.css***: contains the text and background colour classes
+
+How to use the file stylesheets them within your project?
+
+1. Install the library from Nuget: https://www.nuget.org/packages/Maurosoft.Blazor.Tailwind.Core/
+2. Add ```<link rel="stylesheet" href="_content/Maurosoft.Blazor.Tailwind.Core/css/style.css" />``` or ```<link rel="stylesheet" href="_content/Maurosoft.Blazor.Tailwind.Core/css/colour.css" />``` to your App.razor file, inside <head></head>
+
+### Example
+
+MyComponent.razor
+```
+@using Maurosoft.Blazor.Tailwind.Core;
+@using Maurosoft.Blazor.Tailwind.Core.Css;
+@using Maurosoft.Blazor.Tailwind.Core.Enums;
+@using Maurosoft.Blazor.Tailwind.Core.ExtensionMethods;
+@using Maurosoft.Blazor.Tailwind.Core.Interfaces;
+@namespace MyNamespace
+@inherits BlazorComponentBase
+
+<div class="@RenderCssProperty(TailwindCssPropertyScopeBase.Container)">
+    <div>
+        <div class="@RenderCssProperty(TailwindCssPropertyScopeBase.Content)">
+            <div class="@RenderCssProperty(TailwindCssPropertyScopeBase.Content1)">
+        </div>
+        <span class="@RenderCssProperty(TailwindCssPropertyScopeBase.Label)">Label</span>
+    </div>
+</div>
+```
+
+MyComponent.razor.cs
+```
+using Maurosoft.Blazor.Tailwind.Core.Css;
+using Maurosoft.Blazor.Tailwind.Core.Css.Properties.Backgrounds;
+using Maurosoft.Blazor.Tailwind.Core.Css.Properties.Borders;
+using Maurosoft.Blazor.Tailwind.Core.Css.Properties.FlexboxGrid;
+using Maurosoft.Blazor.Tailwind.Core.Css.Properties.Layout;
+using Maurosoft.Blazor.Tailwind.Core.Css.Properties.Sizing;
+using Maurosoft.Blazor.Tailwind.Core.Css.Properties.Spacing;
+using Maurosoft.Blazor.Tailwind.Core.Css.Properties.Typography;
+using Maurosoft.Blazor.Tailwind.Core.Enums;
+using Maurosoft.Blazor.Tailwind.Core.ExtensionMethods;
+using Maurosoft.Blazor.Tailwind.Core.Interfaces;
+using Microsoft.AspNetCore.Components;
+
+namespace MyNamespace
+
+public partial class MyComponent : BlazorComponentBase
+{
+    protected override bool ShouldAutoGenerateId => true;
+
+    protected override string IdSuffix => "mycomponent-";
+
+    protected override void OnInitializeCssProperties()
+    {
+        //mt-10 flex flex-wrap justify-center gap-6
+        AddOrUpdateCssProperty(new TailwindCssProperty<MarginTop>(MarginTop.mt_10, TailwindCssPropertyScopeBase.Container), false);
+        AddOrUpdateCssProperty(new TailwindCssProperty<Display>(Display.Flex, TailwindCssPropertyScopeBase.Container), false);
+        AddOrUpdateCssProperty(new TailwindCssProperty<JustifyContent>(JustifyContent.Justify_Center, TailwindCssPropertyScopeBase.Container), false);
+        AddOrUpdateCssProperty(new TailwindCssProperty<Gap>(Gap.Gap_6, TailwindCssPropertyScopeBase.Container), false);
+
+        //mb-3 flex items-center gap-2
+        AddOrUpdateCssProperty(new TailwindCssProperty<MarginBottom>(MarginBottom.mb_3, TailwindCssPropertyScopeBase.Content), false);
+        AddOrUpdateCssProperty(new TailwindCssProperty<Display>(Display.Flex, TailwindCssPropertyScopeBase.Content), false);
+        AddOrUpdateCssProperty(new TailwindCssProperty<AlignItems>(AlignItems.Items_Center, TailwindCssPropertyScopeBase.Content), false);
+        AddOrUpdateCssProperty(new TailwindCssProperty<Gap>(Gap.Gap_2, TailwindCssPropertyScopeBase.Content), false);
+
+        //relative overflow-hidden rounded-lg
+        AddOrUpdateCssProperty(new TailwindCssProperty<Position>(Position.Relative, TailwindCssPropertyScopeBase.Content1), false);
+        AddOrUpdateCssProperty(new TailwindCssProperty<BorderRadius>(BorderRadius.Rounded_Lg, TailwindCssPropertyScopeBase.Content1), false);
+        AddOrUpdateCssProperty(new TailwindCssProperty<Overflow>(Overflow.Hidden, TailwindCssPropertyScopeBase.Content1), false);
+
+        //block text-center font-medium
+        AddOrUpdateCssProperty(new TailwindCssProperty<Display>(Display.Block, TailwindCssPropertyScopeBase.Label), false);
+        AddOrUpdateCssProperty(new TailwindCssProperty<FontWeight>(FontWeight.Font_Medium, TailwindCssPropertyScopeBase.Label), false);
+        AddOrUpdateCssProperty(new TailwindCssProperty<TextAlign>(TextAlign.Text_Center, TailwindCssPropertyScopeBase.Label), false);
+    }
+
+    protected override void OnGenerateCssClasses()
+    {
+
+    }
+}
+```
 
 ### Features
 - **Base class for components**: Allows the creation of custom Blazor components with a predefined structure.
@@ -12,7 +108,7 @@
 
 ### List of mapped Tailwind Css Classes (<https://tailwindcss.com/docs/installation>)
 
-#### Layout (15/20)
+#### Layout (17/20)
 - [x] Aspect Ratio
 - [x] Container
 - [x] Columns
@@ -27,10 +123,10 @@
 - [x] Isolation
 - [ ] Object Fit
 - [ ] Object Position
-- [ ] Overflow
+- [x] Overflow
 - [ ] Overscroll Behavior
 - [x] Position
-- [ ] Top / Right / Bottom / Left
+- [x] Top / Right / Bottom / Left
 - [x] Visibility
 - [x] Z-Index
 
@@ -88,7 +184,7 @@
 - [ ] List Style Position
 - [ ] List Style Type
 - [x] Text Align
-- [x] Text Color ([ ] focus, [x] hover)
+- [x] Text Color ([x] focus, [x] hover)
 - [ ] Text Decoration
 - [ ] Text Decoration Color
 - [ ] Text Decoration Style

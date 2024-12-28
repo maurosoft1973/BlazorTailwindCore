@@ -1,0 +1,55 @@
+﻿@using Maurosoft.Blazor.Tailwind.Core;
+@using Maurosoft.Blazor.Tailwind.Core.Css;
+@using Maurosoft.Blazor.Tailwind.Core.Enums;
+@using Maurosoft.Blazor.Tailwind.Core.ExtensionMethods;
+@using Maurosoft.Blazor.Tailwind.Core.Interfaces;
+@namespace Maurosoft.Blazor.Tailwind.Core.DemoTailwind.Components.Custom
+@inherits BlazorComponentBase
+
+<!-- Container-->
+<div id="@(Id)-countdown" class="@RenderCssProperty(TailwindCssPropertyScopeBase.Container)">
+    <div>
+        <div class="@RenderCssProperty(TailwindCssPropertyScopeBase.Content)">
+            <div class="@RenderCssProperty(TailwindCssPropertyScopeBase.Content1)">
+                <span class="flex leading-[1.35] lg:text-3xl xl:text-[40px] @RenderCssProperty(TailwindCssPropertyScopeBase.Element1)">0</span>
+            </div>
+            <div class="@RenderCssProperty(TailwindCssPropertyScopeBase.Content1)">
+                <span class="flex leading-[1.35] lg:text-3xl xl:text-[40px] @RenderCssProperty(TailwindCssPropertyScopeBase.Element1)">0</span>
+            </div>
+        </div>
+        <span class="@RenderCssProperty(TailwindCssPropertyScopeBase.Label)">Days</span>
+    </div>
+    <div>
+        <div class="@RenderCssProperty(TailwindCssPropertyScopeBase.Content)">
+            <div class="@RenderCssProperty(TailwindCssPropertyScopeBase.Content1)">
+                <span class="flex leading-[1.35] lg:text-3xl xl:text-[40px] @RenderCssProperty(TailwindCssPropertyScopeBase.Element1)">0</span>
+            </div>
+            <div class="@RenderCssProperty(TailwindCssPropertyScopeBase.Content1)">
+                <span class="flex leading-[1.35] lg:text-3xl xl:text-[40px] @RenderCssProperty(TailwindCssPropertyScopeBase.Element1)">0</span>
+            </div>
+        </div>
+        <span class="@RenderCssProperty(TailwindCssPropertyScopeBase.Label)">Hours</span>
+    </div>
+    <div>
+        <div class="@RenderCssProperty(TailwindCssPropertyScopeBase.Content)">
+            <div class="@RenderCssProperty(TailwindCssPropertyScopeBase.Content1)">
+                <span class="flex leading-[1.35] lg:text-3xl xl:text-[40px] @RenderCssProperty(TailwindCssPropertyScopeBase.Element1)">0</span>
+            </div>
+            <div class="@RenderCssProperty(TailwindCssPropertyScopeBase.Content1)">
+                <span class="flex leading-[1.35] lg:text-3xl xl:text-[40px] @RenderCssProperty(TailwindCssPropertyScopeBase.Element1)">0</span>
+            </div>
+        </div>
+        <span class="@RenderCssProperty(TailwindCssPropertyScopeBase.Label)">Minutes</span>
+    </div>
+    <div>
+        <div class="@RenderCssProperty(TailwindCssPropertyScopeBase.Content)">
+            <div class="@RenderCssProperty(TailwindCssPropertyScopeBase.Content1)">
+                <span class="flex leading-[1.35] lg:text-3xl xl:text-[40px] @RenderCssProperty(TailwindCssPropertyScopeBase.Element1)">0</span>
+            </div>
+            <div class="@RenderCssProperty(TailwindCssPropertyScopeBase.Content1)">
+                <span class="flex leading-[1.35] lg:text-3xl xl:text-[40px] @RenderCssProperty(TailwindCssPropertyScopeBase.Element1)">0</span>
+            </div>
+        </div>
+        <span class="@RenderCssProperty(TailwindCssPropertyScopeBase.Label)">Seconds</span>
+    </div>
+</div>

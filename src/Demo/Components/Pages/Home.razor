@@ -1,0 +1,24 @@
+﻿@page "/"
+@rendermode @(new InteractiveServerRenderMode(true))
+
+<PageTitle>Home</PageTitle>
+
+<Countdown @ref="countdown" CssProperties="@properties" />
+
+<button @onclick="OnClick" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Change color</button>
+
+@code {
+    private Countdown countdown { get; set; } = default!;
+
+    private List<Interfaces.ITailwindCssProperty> properties = new List<Interfaces.ITailwindCssProperty>()
+    {
+        new TailwindCssProperty<BackgroundColor>(BackgroundColor.Gray_300),
+        new TailwindCssProperty<TextColor>(TextColor.Green_600),
+        new TailwindCssProperty<FontStyle>(FontStyle.Italic)
+    };
+
+    void OnClick(){
+        countdown.AddOrUpdateCssProperties([new TailwindCssProperty<BackgroundColor>(BackgroundColor.Amber_500, Enums.TailwindCssPropertyScopeBase.Element1), new TailwindCssProperty<TextColor>(TextColor.Red_700, Enums.TailwindCssPropertyScopeBase.Element1)]);
+        //custom.AddOrUpdateCssProperty(new TailwindCssProperty<TextColor>(TextColor.Red_700));
+    }
+}
