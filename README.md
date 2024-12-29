@@ -130,7 +130,7 @@ public partial class MyComponent : BlazorComponentBase
 - [x] Visibility
 - [x] Z-Index
 
-#### Flexbox e Grid (12/24)
+#### Flexbox e Grid (15/24)
 - [ ] Flex Basis
 - [x] Flex Direction
 - [x] Flex Wrap
