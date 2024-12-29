@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Maurosoft.Blazor.Tailwind.Core.Css.Proplrties.Spacing;
+namespace Maurosoft.Blazor.Tailwind.Core.Css.Properties.Spacing;
 
 public sealed class PaddingLeft : TailwindCssClassBase
 {

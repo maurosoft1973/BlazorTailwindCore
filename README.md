@@ -130,7 +130,7 @@ public partial class MyComponent : BlazorComponentBase
 - [x] Visibility
 - [x] Z-Index
 
-#### Flexbox e Grid (15/24)
+#### Flexbox e Grid (21/24)
 - [ ] Flex Basis
 - [x] Flex Direction
 - [x] Flex Wrap
@@ -149,12 +149,12 @@ public partial class MyComponent : BlazorComponentBase
 - [x] Justify Content
 - [x] Justify Items
 - [x] Justify Self
-- [ ] Align Content
+- [x] Align Content
 - [x] Align Items
-- [ ] Align Self
-- [ ] Place Content
-- [ ] Place Items
-- [ ] Place Self
+- [x] Align Self
+- [x] Place Content
+- [x] Place Items
+- [x] Place Self
 
 #### Spacing (3/3)
 - [x] Padding ([x] bottom, [x] top, [x] left, [x] right, [x] start, [x] end, [x] x, [x] y)

@@ -172,6 +172,22 @@ public static class CssPropertyExtension
                     cssProperties.Add(new TailwindCssProperty<Flex>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
+                case Type t when t == typeof(FlexDirection):
+                    cssProperties.Add(new TailwindCssProperty<FlexDirection>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(FlexGrow):
+                    cssProperties.Add(new TailwindCssProperty<FlexGrow>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(FlexShrink):
+                    cssProperties.Add(new TailwindCssProperty<FlexShrink>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(FlexWrap):
+                    cssProperties.Add(new TailwindCssProperty<FlexShrink>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
                 case Type t when t == typeof(FontSize):
                     cssProperties.Add(new TailwindCssProperty<FontSize>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
@@ -184,18 +200,6 @@ public static class CssPropertyExtension
                     cssProperties.Add(new TailwindCssProperty<Gap>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
-                case Type t when t == typeof(JustifySelf):
-                    cssProperties.Add(new TailwindCssProperty<JustifySelf>(cssPropertyBase.Value, cssPropertyBase.Scope));
-                    break;
-
-                case Type t when t == typeof(JustifyItems):
-                    cssProperties.Add(new TailwindCssProperty<JustifyItems>(cssPropertyBase.Value, cssPropertyBase.Scope));
-                    break;
-
-                case Type t when t == typeof(JustifyContent):
-                    cssProperties.Add(new TailwindCssProperty<JustifyContent>(cssPropertyBase.Value, cssPropertyBase.Scope));
-                    break;
-
                 case Type t when t == typeof(GridColumn):
                     cssProperties.Add(new TailwindCssProperty<GridColumn>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
@@ -206,6 +210,38 @@ public static class CssPropertyExtension
 
                 case Type t when t == typeof(GridColumnStart):
                     cssProperties.Add(new TailwindCssProperty<GridColumnStart>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(GridRow):
+                    cssProperties.Add(new TailwindCssProperty<GridRow>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(GridRowEnd):
+                    cssProperties.Add(new TailwindCssProperty<GridRowEnd>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(GridRowStart):
+                    cssProperties.Add(new TailwindCssProperty<GridRowStart>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(GridTemplateColumns):
+                    cssProperties.Add(new TailwindCssProperty<GridTemplateColumns>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(GridTemplateRows):
+                    cssProperties.Add(new TailwindCssProperty<GridTemplateRows>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(JustifyContent):
+                    cssProperties.Add(new TailwindCssProperty<JustifyContent>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(JustifyItems):
+                    cssProperties.Add(new TailwindCssProperty<JustifyItems>(cssPropertyBase.Value, cssPropertyBase.Scope));
+                    break;
+
+                case Type t when t == typeof(JustifySelf):
+                    cssProperties.Add(new TailwindCssProperty<JustifySelf>(cssPropertyBase.Value, cssPropertyBase.Scope));
                     break;
 
                 case Type t when t == typeof(Height):
