@@ -130,17 +130,17 @@ public partial class MyComponent : BlazorComponentBase
 - [x] Visibility
 - [x] Z-Index
 
-#### Flexbox e Grid (8/24)
+#### Flexbox e Grid (12/24)
 - [ ] Flex Basis
-- [ ] Flex Direction
-- [ ] Flex Wrap
+- [x] Flex Direction
+- [x] Flex Wrap
 - [x] Flex
-- [ ] Flex Grow
-- [ ] Flex Shrink
-- [ ] Order
-- [ ] Grid Template Columns
+- [x] Flex Grow
+- [x] Flex Shrink
+- [x] Order
+- [x] Grid Template Columns
 - [x] Grid Column Start / End
-- [ ] Grid Template Rows
+- [x] Grid Template Rows
 - [x] Grid Row Start / End
 - [ ] Grid Auto Flow
 - [ ] Grid Auto Columns

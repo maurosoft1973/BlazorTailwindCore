@@ -29,6 +29,27 @@ public sealed class PaddingY : TailwindCssClassBase
     public static readonly PaddingY py_8 = new("py-8", 14);
     public static readonly PaddingY py_9 = new("py-9", 15);
     public static readonly PaddingY py_10 = new("py-10", 16);
+    public static readonly PaddingY py_11 = new("py-11", 17);
+    public static readonly PaddingY py_12 = new("py-12", 18);
+    public static readonly PaddingY py_13 = new("py-13", 19);
+    public static readonly PaddingY py_14 = new("py-14", 20);
+    public static readonly PaddingY py_16 = new("py-16", 21);
+    public static readonly PaddingY py_20 = new("py-20", 22);
+    public static readonly PaddingY py_24 = new("py-24", 23);
+    public static readonly PaddingY py_28 = new("py-28", 24);
+    public static readonly PaddingY py_32 = new("py-32", 25);
+    public static readonly PaddingY py_36 = new("py-36", 26);
+    public static readonly PaddingY py_40 = new("py-40", 27);
+    public static readonly PaddingY py_44 = new("py-44", 28);
+    public static readonly PaddingY py_48 = new("py-44", 29);
+    public static readonly PaddingY py_52 = new("py-44", 30);
+    public static readonly PaddingY py_56 = new("py-44", 31);
+    public static readonly PaddingY py_60 = new("py-44", 32);
+    public static readonly PaddingY py_64 = new("py-44", 33);
+    public static readonly PaddingY py_72 = new("py-44", 34);
+    public static readonly PaddingY py_80 = new("py-44", 35);
+    public static readonly PaddingY py_88 = new("py-44", 36);
+    public static readonly PaddingY py_96 = new("py-44", 37);
 
     private PaddingY(string name, int value) : base(name, value) { }
 }

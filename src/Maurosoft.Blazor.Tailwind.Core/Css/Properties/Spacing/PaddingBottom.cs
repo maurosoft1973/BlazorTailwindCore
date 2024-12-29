@@ -25,6 +25,27 @@ public sealed class PaddingBottom : TailwindCssClassBase
     public static readonly PaddingBottom pb_8 = new("pb-8", 14);
     public static readonly PaddingBottom pb_9 = new("pb-9", 15);
     public static readonly PaddingBottom pb_10 = new("pb-10", 16);
+    public static readonly PaddingBottom pb_11 = new("pb-11", 17);
+    public static readonly PaddingBottom pb_12 = new("pb-12", 18);
+    public static readonly PaddingBottom pb_13 = new("pb-13", 19);
+    public static readonly PaddingBottom pb_14 = new("pb-14", 20);
+    public static readonly PaddingBottom pb_16 = new("pb-16", 21);
+    public static readonly PaddingBottom pb_20 = new("pb-20", 22);
+    public static readonly PaddingBottom pb_24 = new("pb-24", 23);
+    public static readonly PaddingBottom pb_28 = new("pb-28", 24);
+    public static readonly PaddingBottom pb_32 = new("pb-32", 25);
+    public static readonly PaddingBottom pb_36 = new("pb-36", 26);
+    public static readonly PaddingBottom pb_40 = new("pb-40", 27);
+    public static readonly PaddingBottom pb_44 = new("pb-44", 28);
+    public static readonly PaddingBottom pb_48 = new("pb-44", 29);
+    public static readonly PaddingBottom pb_52 = new("pb-44", 30);
+    public static readonly PaddingBottom pb_56 = new("pb-44", 31);
+    public static readonly PaddingBottom pb_60 = new("pb-44", 32);
+    public static readonly PaddingBottom pb_64 = new("pb-44", 33);
+    public static readonly PaddingBottom pb_72 = new("pb-44", 34);
+    public static readonly PaddingBottom pb_80 = new("pb-44", 35);
+    public static readonly PaddingBottom pb_88 = new("pb-44", 36);
+    public static readonly PaddingBottom pb_96 = new("pb-44", 37);
 
     private PaddingBottom(string name, int value) : base(name, value) { }
 }
